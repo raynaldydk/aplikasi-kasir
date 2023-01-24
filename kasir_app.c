@@ -13,6 +13,7 @@ struct Menu{
 } array_menu[50];
 
 struct Order{
+	char date[20];
 	int index_order;
 	char ukuran_order;
 	int qty_order;
@@ -25,6 +26,7 @@ void scan_order(int index_temp);
 void rekap_order(int index_temp);
 void ubah_order();
 void print_receipt(char sub_input3, int index_temp);
+void write_to_file(int index_temp);
 
 int main(){
 	char input;
@@ -68,6 +70,7 @@ int main(){
 			printf("Input: "); scanf("%c", &sub_input3); getchar();
 			system("cls");
 			print_receipt(sub_input3, index_temp);
+			write_to_file(index_temp);
 			break;
 		case 0:
 			exit(0);
@@ -195,4 +198,30 @@ void print_receipt(char sub_input3, int index_temp){
 	}
 	printf("| %02d:%02d:%02d\t\t\t\t\t\t\t     |\n", tm.tm_hour, tm.tm_min, tm.tm_sec);
 	rekap_order(index_temp);
+}
+
+void write_to_file(int index_temp){
+	time_t t = time(NULL);
+	struct tm tm = *localtime(&t);
+	FILE *fp;
+	fp = fopen("sales.txt", "a");
+	for(int i=0; i<index_temp; i++){
+		if(toupper(array_order[i].ukuran_order) == 'R'){
+			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f\n",
+				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
+				array_menu[array_order[i].index_order].nama_menu,
+				array_order[i].ukuran_order,
+				array_order[i].qty_order,
+				(array_menu[array_order[i].index_order].harga_regular * array_order[i].qty_order));
+		}
+		else if(toupper(array_order[i].ukuran_order) == 'L'){
+			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f\n",
+				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
+				array_menu[array_order[i].index_order].nama_menu,
+				array_order[i].ukuran_order,
+				array_order[i].qty_order,
+				(array_menu[array_order[i].index_order].harga_large * array_order[i].qty_order));
+		}
+	}
+	fclose(fp);
 }
