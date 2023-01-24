@@ -1,0 +1,11 @@
+nama, harga_regular, harga_large
+Americano, 15000, 18000
+Es Kopi Susu Aren, 18000, 21000
+Caffe Latte, 18000, 21000
+Cappuccino, 18000, 21000
+Es Kopi Susu Signature, 21000, 24000
+Caramel Macchiato, 21000, 24000
+Asian Dolce Latte, 21000, 24000
+Vanilla Latte, 21000, 24000
+Caramel Latte, 21000, 24000
+Hazelnut Latte, 21000, 24000
