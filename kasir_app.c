@@ -6,6 +6,17 @@
 #include <ctype.h>
 #include <time.h>
 
+const char *FORMAT_DATA_READ = "%d/%d/%d, %[^,], %c, %d, %d, %s\n";
+
+struct Sales{
+	unsigned int date[4];
+	char nama[50];
+	char size;
+	int qty;
+	int total_pembayaran;
+	char metode_pembayaran[20];
+} array_sales[100];
+
 struct Menu{
 	char nama_menu[50];
 	float harga_regular;
@@ -270,16 +281,76 @@ void input_order(){
 	main();
 }
 
+void print_array_sales(int i){
+	printf("| %-2d | %d/%d/%d | %-22s |  %-3c |  %-2d | %-6d | %-8s |\n", 
+		i+1,
+		array_sales[i].date[0],
+		array_sales[i].date[1],
+		array_sales[i].date[2],
+		array_sales[i].nama,
+		array_sales[i].size,
+		array_sales[i].qty,
+		array_sales[i].total_pembayaran,
+		array_sales[i].metode_pembayaran);
+}
+
+void view_sales(){
+	FILE *fp;
+	int file_index = index_counter("sales.txt");
+	fp = fopen("sales.txt", "r");
+	for(int i=0; i<file_index; i++){
+		fscanf(fp, FORMAT_DATA_READ, 
+			&array_sales[i].date[0],
+			&array_sales[i].date[1],
+			&array_sales[i].date[2],
+			&array_sales[i].nama,
+			&array_sales[i].size,
+			&array_sales[i].qty,
+			&array_sales[i].total_pembayaran,
+			&array_sales[i].metode_pembayaran);
+	}
+	fclose(fp);
+	system("cls");
+	printf("----------------------------------------------------------------------------\n");
+	printf("| No |  Tanggal  |           Nama         | Size | Qty | Total  |  Metode  |\n");
+	printf("----------------------------------------------------------------------------\n");
+	for(int i=0; i<file_index; i++){
+		print_array_sales(i);
+	}
+	printf("----------------------------------------------------------------------------\n");
+}
+
 void menu_admin(){
 	char sub_input;
 	system("cls");
 	printf("Menu Admin\n");
 	printf("--------------\n");
 	printf("1. View Sales\n");
-	printf("2. Add Menu\n");
-	printf("3. Edit Menu\n");
-	printf("4. Delete Menu\n");
+	printf("2. Sort Sales\n");
+	printf("3. Search Sales\n");
 	printf("0. Back\n");
 	printf("--------------\n");
-	printf("Input: "); scanf("%c", &sub_input); getchar();
+	printf("Input: "); scanf("%d", &sub_input); getchar();
+	switch(sub_input){
+		case 1:
+			view_sales();
+			system("pause");
+			menu_admin();
+			break;
+		case 2:
+//			sort_sales();
+			break;
+		case 3:
+//			search_sales();
+			break;
+		case 0:
+			system("cls");
+			main();
+			break;
+		default:
+			printf("Input salah!\n");
+			system("pause");
+			menu_admin();
+			break;
+	}
 }
