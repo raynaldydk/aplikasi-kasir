@@ -191,10 +191,10 @@ void print_receipt(char sub_input3, int index_temp){
 		printf("\t\t\t\t        Cash |\n");
 	}
 	else if(sub_input3 == '2'){
-		printf("\t\t\t\tQRIS\n");
+		printf("\t\t\t\t        QRIS |\n");
 	}
 	else if(sub_input3 == '3'){
-		printf("\t\t\t\tE-Wallet\n");
+		printf("\t\t\t\t    E-Wallet |\n");
 	}
 	printf("| %02d:%02d:%02d\t\t\t\t\t\t\t     |\n", tm.tm_hour, tm.tm_min, tm.tm_sec);
 	rekap_order(index_temp);
@@ -206,57 +206,53 @@ void write_to_file(char sub_input3, int index_temp){
 	FILE *fp;
 	fp = fopen("sales.txt", "a");
 	for(int i=0; i<index_temp; i++){
-		if(toupper(array_order[i].ukuran_order) == 'R'){
-			if(sub_input3 == '1'){
-				fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, Cash\n",
-					tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
-					array_menu[array_order[i].index_order].nama_menu,
-					array_order[i].ukuran_order,
-					array_order[i].qty_order,
-					(array_menu[array_order[i].index_order].harga_regular * array_order[i].qty_order));
-			}
-			else if(sub_input3 =='2'){
-				fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, QRIS\n",
-					tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
-					array_menu[array_order[i].index_order].nama_menu,
-					array_order[i].ukuran_order,
-					array_order[i].qty_order,
-					(array_menu[array_order[i].index_order].harga_regular * array_order[i].qty_order));
-			}
-			else if(sub_input3 =='3'){
-				fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, E-Wallet\n",
-					tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
-					array_menu[array_order[i].index_order].nama_menu,
-					array_order[i].ukuran_order,
-					array_order[i].qty_order,
-					(array_menu[array_order[i].index_order].harga_regular * array_order[i].qty_order));
-			}
+		if(toupper(array_order[i].ukuran_order) == 'R' && sub_input3 == '1'){
+			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, Cash\n",
+				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
+				array_menu[array_order[i].index_order].nama_menu,
+				array_order[i].ukuran_order,
+				array_order[i].qty_order,
+				(array_menu[array_order[i].index_order].harga_regular * array_order[i].qty_order));
 		}
-		else if(toupper(array_order[i].ukuran_order) == 'L'){
-			if(sub_input3 == '1'){
-				fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, Cash\n",
-					tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
-					array_menu[array_order[i].index_order].nama_menu,
-					array_order[i].ukuran_order,
-					array_order[i].qty_order,
-					(array_menu[array_order[i].index_order].harga_large * array_order[i].qty_order));
-			}
-			else if(sub_input3 =='2'){
-				fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, QRIS\n",
-					tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
-					array_menu[array_order[i].index_order].nama_menu,
-					array_order[i].ukuran_order,
-					array_order[i].qty_order,
-					(array_menu[array_order[i].index_order].harga_large * array_order[i].qty_order));
-			}
-			else if(sub_input3 =='3'){
+		else if(toupper(array_order[i].ukuran_order) == 'R' && sub_input3 =='2'){
+			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, QRIS\n",
+				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
+				array_menu[array_order[i].index_order].nama_menu,
+				array_order[i].ukuran_order,
+				array_order[i].qty_order,
+				(array_menu[array_order[i].index_order].harga_regular * array_order[i].qty_order));
+		}
+		else if(toupper(array_order[i].ukuran_order) == 'R' && sub_input3 =='3'){
+			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, E-Wallet\n",
+				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
+				array_menu[array_order[i].index_order].nama_menu,
+				array_order[i].ukuran_order,
+				array_order[i].qty_order,
+				(array_menu[array_order[i].index_order].harga_regular * array_order[i].qty_order));
+		}
+		else if(toupper(array_order[i].ukuran_order) == 'L' && sub_input3 == '1'){
+			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, Cash\n",
+				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
+				array_menu[array_order[i].index_order].nama_menu,
+				array_order[i].ukuran_order,
+				array_order[i].qty_order,
+				(array_menu[array_order[i].index_order].harga_large * array_order[i].qty_order));
+		}
+		else if(toupper(array_order[i].ukuran_order) == 'L' && sub_input3 =='2'){
+			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, QRIS\n",
+				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
+				array_menu[array_order[i].index_order].nama_menu,
+				array_order[i].ukuran_order,
+				array_order[i].qty_order,
+				(array_menu[array_order[i].index_order].harga_large * array_order[i].qty_order));
+		}
+		else if(toupper(array_order[i].ukuran_order) == 'L' && sub_input3 =='3'){
 				fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, E-Wallet\n",
 					tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
 					array_menu[array_order[i].index_order].nama_menu,
 					array_order[i].ukuran_order,
 					array_order[i].qty_order,
 					(array_menu[array_order[i].index_order].harga_large * array_order[i].qty_order));
-			}
 		}
 	}
 	fclose(fp);
