@@ -7,3 +7,5 @@
 25/1/2023, Capuccino, L, 3, 63000, QRIS
 25/1/2023, Es Kopi Susu Aren, L, 1, 21000, Cash
 25/1/2023, Vanilla Latte, L, 1, 24000, E-Wallet
+25/1/2023, Teh Macchiato, L, 20, 460000, E-Wallet
+25/1/2023, Mochaccino Vanilla, R, 2, 54000, E-Wallet

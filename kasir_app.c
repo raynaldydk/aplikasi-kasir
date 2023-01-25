@@ -5,17 +5,18 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
+#include <string.h>
 
 const char *FORMAT_DATA_READ = "%d/%d/%d, %[^,], %c, %d, %d, %s\n";
 
 struct Sales{
-	unsigned int date[4];
+	int date[4];
 	char nama[50];
 	char size;
 	int qty;
 	int total_pembayaran;
 	char metode_pembayaran[20];
-} array_sales[100];
+} array_sales[100], temp;
 
 struct Menu{
 	char nama_menu[50];
@@ -40,6 +41,9 @@ void ubah_order();
 void print_receipt(char sub_input3, int index_temp);
 void write_to_file(char sub_input3, int index_temp);
 void menu_admin();
+void sort_sales();
+void search_sales();
+void print_sales();
 
 int main(){
 	char input;
@@ -282,7 +286,7 @@ void input_order(){
 }
 
 void print_array_sales(int i){
-	printf("| %-2d | %d/%d/%d | %-22s |  %-3c |  %-2d | %-6d | %-8s |\n", 
+	printf("| %-2d | %d/%d/%d | %-22s |  %-3c | %-3d | %-6d | %-8s |\n", 
 		i+1,
 		array_sales[i].date[0],
 		array_sales[i].date[1],
@@ -294,7 +298,7 @@ void print_array_sales(int i){
 		array_sales[i].metode_pembayaran);
 }
 
-void view_sales(){
+void initialize_data(){
 	FILE *fp;
 	int file_index = index_counter("sales.txt");
 	fp = fopen("sales.txt", "r");
@@ -310,7 +314,17 @@ void view_sales(){
 			&array_sales[i].metode_pembayaran);
 	}
 	fclose(fp);
+}
+
+void view_sales(){
+	int file_index = index_counter("sales.txt");
+	initialize_data();
 	system("cls");
+	print_sales();
+}
+
+void print_sales(){
+	int file_index = index_counter("sales.txt");
 	printf("----------------------------------------------------------------------------\n");
 	printf("| No |  Tanggal  |           Nama         | Size | Qty | Total  |  Metode  |\n");
 	printf("----------------------------------------------------------------------------\n");
@@ -318,6 +332,85 @@ void view_sales(){
 		print_array_sales(i);
 	}
 	printf("----------------------------------------------------------------------------\n");
+}
+
+typedef int (*compfn)(const void*, const void*);
+
+int compare_nama(struct Sales *elem1, struct Sales *elem2){
+	if(strcasecmp(elem1->nama, elem2->nama) < 0){
+		return -1;
+	}
+	else if(strcasecmp(elem1->nama, elem2->nama) > 0){
+		return 1;
+	}
+	return 0;	
+}
+
+int compare_qty(struct Sales *elem1, struct Sales *elem2){
+	if(elem1->qty < elem2->qty){
+		return -1;
+	}
+	else if(elem1->qty > elem2->qty){
+		return 1;
+	}
+	return 0;
+}
+
+int compare_total(struct Sales *elem1, struct Sales *elem2){
+	if(elem1->total_pembayaran < elem2->total_pembayaran){
+		return -1;
+	}
+	else if(elem1->total_pembayaran > elem2->total_pembayaran){
+		return 1;
+	}
+	return 0;
+}
+
+void sort_sales(){
+	int file_index = index_counter("sales.txt");
+	int sub_input;
+	initialize_data();
+	system("cls");
+	printf("Sort berdasarkan:\n");
+	printf("1. Nama Produk\n");
+	printf("2. Qty\n");
+	printf("3. Total\n");
+	printf("0. Back\n");
+	printf("Input: "); scanf("%d", &sub_input); getchar();
+	switch(sub_input){
+		case 1:
+			qsort((void *) &array_sales, file_index, sizeof(struct Sales), (compfn)compare_nama);
+			system("cls");
+			printf("Sort Berdasarkan Nama Produk\n");
+			print_sales();
+			system("pause");
+			sort_sales();
+			break;
+		case 2:
+			qsort((void *) &array_sales, file_index, sizeof(struct Sales), (compfn)compare_qty);
+			system("cls");
+			printf("Sort Berdasarkan Qty Produk Terjual\n");
+			print_sales();
+			system("pause");
+			sort_sales();
+			break;
+		case 3:
+			qsort((void *) &array_sales, file_index, sizeof(struct Sales), (compfn)compare_total);
+			system("cls");
+			printf("Sort Berdasarkan Nama Produk\n");
+			print_sales();
+			system("pause");
+			sort_sales();
+			break;
+		case 0:
+			menu_admin();
+			break;
+		default:
+			printf("Input salah!\n");
+			system("pause");
+			sort_sales();
+			break;
+	}
 }
 
 void menu_admin(){
@@ -338,7 +431,7 @@ void menu_admin(){
 			menu_admin();
 			break;
 		case 2:
-//			sort_sales();
+			sort_sales();
 			break;
 		case 3:
 //			search_sales();
