@@ -26,7 +26,7 @@ void scan_order(int index_temp);
 void rekap_order(int index_temp);
 void ubah_order();
 void print_receipt(char sub_input3, int index_temp);
-void write_to_file(int index_temp);
+void write_to_file(char sub_input3, int index_temp);
 
 int main(){
 	char input;
@@ -65,12 +65,12 @@ int main(){
 			}while(sub_input2!='2');
 			printf("Pilih metode pembayaran\n");
 			printf("1. Cash\n");
-			printf("2. QR Code\n");
+			printf("2. QRIS\n");
 			printf("3. E-Wallet\n");
 			printf("Input: "); scanf("%c", &sub_input3); getchar();
 			system("cls");
 			print_receipt(sub_input3, index_temp);
-			write_to_file(index_temp);
+			write_to_file(sub_input3, index_temp);
 			break;
 		case 0:
 			exit(0);
@@ -191,7 +191,7 @@ void print_receipt(char sub_input3, int index_temp){
 		printf("\t\t\t\t        Cash |\n");
 	}
 	else if(sub_input3 == '2'){
-		printf("\t\t\t\tQR Code\n");
+		printf("\t\t\t\tQRIS\n");
 	}
 	else if(sub_input3 == '3'){
 		printf("\t\t\t\tE-Wallet\n");
@@ -200,27 +200,63 @@ void print_receipt(char sub_input3, int index_temp){
 	rekap_order(index_temp);
 }
 
-void write_to_file(int index_temp){
+void write_to_file(char sub_input3, int index_temp){
 	time_t t = time(NULL);
 	struct tm tm = *localtime(&t);
 	FILE *fp;
 	fp = fopen("sales.txt", "a");
 	for(int i=0; i<index_temp; i++){
 		if(toupper(array_order[i].ukuran_order) == 'R'){
-			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f\n",
-				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
-				array_menu[array_order[i].index_order].nama_menu,
-				array_order[i].ukuran_order,
-				array_order[i].qty_order,
-				(array_menu[array_order[i].index_order].harga_regular * array_order[i].qty_order));
+			if(sub_input3 == '1'){
+				fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, Cash\n",
+					tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
+					array_menu[array_order[i].index_order].nama_menu,
+					array_order[i].ukuran_order,
+					array_order[i].qty_order,
+					(array_menu[array_order[i].index_order].harga_regular * array_order[i].qty_order));
+			}
+			else if(sub_input3 =='2'){
+				fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, QRIS\n",
+					tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
+					array_menu[array_order[i].index_order].nama_menu,
+					array_order[i].ukuran_order,
+					array_order[i].qty_order,
+					(array_menu[array_order[i].index_order].harga_regular * array_order[i].qty_order));
+			}
+			else if(sub_input3 =='3'){
+				fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, E-Wallet\n",
+					tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
+					array_menu[array_order[i].index_order].nama_menu,
+					array_order[i].ukuran_order,
+					array_order[i].qty_order,
+					(array_menu[array_order[i].index_order].harga_regular * array_order[i].qty_order));
+			}
 		}
 		else if(toupper(array_order[i].ukuran_order) == 'L'){
-			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f\n",
-				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
-				array_menu[array_order[i].index_order].nama_menu,
-				array_order[i].ukuran_order,
-				array_order[i].qty_order,
-				(array_menu[array_order[i].index_order].harga_large * array_order[i].qty_order));
+			if(sub_input3 == '1'){
+				fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, Cash\n",
+					tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
+					array_menu[array_order[i].index_order].nama_menu,
+					array_order[i].ukuran_order,
+					array_order[i].qty_order,
+					(array_menu[array_order[i].index_order].harga_large * array_order[i].qty_order));
+			}
+			else if(sub_input3 =='2'){
+				fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, QRIS\n",
+					tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
+					array_menu[array_order[i].index_order].nama_menu,
+					array_order[i].ukuran_order,
+					array_order[i].qty_order,
+					(array_menu[array_order[i].index_order].harga_large * array_order[i].qty_order));
+			}
+			else if(sub_input3 =='3'){
+				fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, E-Wallet\n",
+					tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
+					array_menu[array_order[i].index_order].nama_menu,
+					array_order[i].ukuran_order,
+					array_order[i].qty_order,
+					(array_menu[array_order[i].index_order].harga_large * array_order[i].qty_order));
+			}
 		}
 	}
 	fclose(fp);

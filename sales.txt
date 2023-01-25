@@ -1,2 +1,4 @@
-24/1/2023, Cappuccino, R, 2, 36000.00
-24/1/2023, Caramel Macchiato, L, 20, 480000.00
+24/1/2023, Cappuccino, R, 2, 36000.00, Cash
+24/1/2023, Caramel Macchiato, L, 20, 480000.00, Cash
+25/1/2023, Es Kopi Susu Aren, R, 3, 54000.00, E-Wallet
+25/1/2023, Caramel Latte, L, 20, 480000.00, E-Wallet
