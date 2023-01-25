@@ -372,10 +372,12 @@ void sort_sales(){
 	initialize_data();
 	system("cls");
 	printf("Sort berdasarkan:\n");
+	printf("-----------------\n");
 	printf("1. Nama Produk\n");
 	printf("2. Qty\n");
 	printf("3. Total\n");
 	printf("0. Back\n");
+	printf("-----------------\n");
 	printf("Input: "); scanf("%d", &sub_input); getchar();
 	switch(sub_input){
 		case 1:
@@ -413,6 +415,151 @@ void sort_sales(){
 	}
 }
 
+void search_sales(){
+	int file_index = index_counter("sales.txt");
+	int sub_input;
+	char key[25];
+	int found;
+	int high, low;
+	initialize_data();
+	system("cls");
+	printf("Search berdasarkan:\n");
+	printf("-----------------\n");
+	printf("1. Nama Produk\n");
+	printf("2. Qty\n");
+	printf("3. Total Pembayaran\n");
+	printf("4. Metode Pembayaran\n");
+	printf("0. Back\n");
+	printf("-----------------\n");
+	printf("Input: "); scanf("%d", &sub_input); getchar();
+	switch(sub_input){
+		case 1:
+			system("cls");
+            printf("Masukkan nama produk yang akan dicari : ");
+            scanf("%s", key);
+            getchar();
+            found=0;
+            for(int i=0; i<file_index; i++){
+            	if(strstr(array_sales[i].nama, key) != NULL){
+            		found = 1;
+				}
+			}
+			if(found==0){
+                printf("Data tidak ditemukan\n");
+                system("pause");
+                search_sales();
+            }
+            else{
+            	printf("----------------------------------------------------------------------------\n");
+				printf("| No |  Tanggal  |           Nama         | Size | Qty | Total  |  Metode  |\n");
+				printf("----------------------------------------------------------------------------\n");
+	            for(int i=0; i<file_index; i++){
+	            	if(strstr(array_sales[i].nama, key) != NULL){
+	            		print_array_sales(i);
+					}
+				}
+				printf("----------------------------------------------------------------------------\n");
+            }
+            system("pause");
+            search_sales();
+			break;
+		case 2:
+			system("cls");
+            printf("Masukkan qty terendah : ");
+            scanf("%d", &low);
+            printf("Masukkan qty tertinggi : ");
+            scanf("%d", &high);
+            for(int i = 0; i < file_index; i++){
+                if(array_sales[i].qty >= low && array_sales[i].qty <= high){
+                	found=1;
+				};
+            }
+            if (found == 0){
+                printf("Data tidak ditemukan\n");
+                system("pause");
+                search_sales();
+            }
+            else{
+            	printf("----------------------------------------------------------------------------\n");
+				printf("| No |  Tanggal  |           Nama         | Size | Qty | Total  |  Metode  |\n");
+				printf("----------------------------------------------------------------------------\n");
+                for(int i = 0; i < file_index; i++){
+                    if(array_sales[i].qty >= low && array_sales[i].qty <= high){
+                        print_array_sales(i);
+                    }
+                }
+                printf("----------------------------------------------------------------------------\n");
+            }
+			break;
+		case 3:
+			system("cls");
+            printf("Masukkan pembayaran terendah : ");
+            scanf("%d", &low);
+            printf("Masukkan pembayaran tertinggi : ");
+            scanf("%d", &high);
+            for(int i = 0; i < file_index; i++){
+                if(array_sales[i].total_pembayaran >= low && array_sales[i].total_pembayaran <= high){
+                	found=1;
+				};
+            }
+            if (found == 0){
+                printf("Data tidak ditemukan\n");
+                system("pause");
+                search_sales();
+            }
+            else{
+            	printf("----------------------------------------------------------------------------\n");
+				printf("| No |  Tanggal  |           Nama         | Size | Qty | Total  |  Metode  |\n");
+				printf("----------------------------------------------------------------------------\n");
+                for(int i = 0; i < file_index; i++){
+                    if(array_sales[i].total_pembayaran >= low && array_sales[i].total_pembayaran <= high){
+                        print_array_sales(i);
+                    }
+                }
+                printf("----------------------------------------------------------------------------\n");
+            }
+			break;
+		case 4:
+			system("cls");
+            printf("Masukkan metode pembayaran yang akan dicari : ");
+            scanf("%s", key);
+            getchar();
+            found=0;
+            for(int i=0; i<file_index; i++){
+            	if(strstr(array_sales[i].metode_pembayaran, key) != NULL){
+            		found = 1;
+				}
+			}
+			if(found==0){
+                printf("Data tidak ditemukan\n");
+                system("pause");
+                search_sales();
+            }
+            else{
+            	printf("----------------------------------------------------------------------------\n");
+				printf("| No |  Tanggal  |           Nama         | Size | Qty | Total  |  Metode  |\n");
+				printf("----------------------------------------------------------------------------\n");
+	            for(int i=0; i<file_index; i++){
+	            	if(strstr(array_sales[i].metode_pembayaran, key) != NULL){
+	            		print_array_sales(i);
+					}
+				}
+				printf("----------------------------------------------------------------------------\n");
+            }
+            system("pause");
+            search_sales();
+			break;
+		case 0:
+			menu_admin();
+			break;
+		default:
+			printf("Input salah!\n");
+			system("pause");
+			sort_sales();
+			break; 
+	}
+}
+
 void menu_admin(){
 	char sub_input;
 	system("cls");
@@ -434,7 +581,7 @@ void menu_admin(){
 			sort_sales();
 			break;
 		case 3:
-//			search_sales();
+			search_sales();
 			break;
 		case 0:
 			system("cls");
