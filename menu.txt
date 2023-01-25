@@ -1,11 +1,23 @@
 nama, harga_regular, harga_large
 Americano, 15000, 18000
 Es Kopi Susu Aren, 18000, 21000
-Caffe Latte, 18000, 21000
-Cappuccino, 18000, 21000
-Es Kopi Susu Signature, 21000, 24000
+Caffe Latte, 21000, 24000
+Capuccino, 18000, 21000
+Honey Americano, 21000, 24000
 Caramel Macchiato, 21000, 24000
 Asian Dolce Latte, 21000, 24000
 Vanilla Latte, 21000, 24000
 Caramel Latte, 21000, 24000
 Hazelnut Latte, 21000, 24000
+Boba Brown Sugar, 27000, 30000
+Cotton Candy Latte, 27000, 30000
+Mochaccino Vanilla, 27000, 30000
+Java Chip, 24000, 27000
+Chocoberry, 27000, 30000
+Choco Banana, 27000, 30000
+Choco Tiramisu, 27000, 30000
+Matcha Latte, 24000, 27000
+Matchapresso, 24000, 27000
+Ice Shaken Boba Tea, 18000, 21000
+Teh Macchiato, 20000, 23000
+Hot Tea, 15000, 18000

@@ -5,3 +5,4 @@
 25/1/2023, Cappuccino, L, 4, 84000.00, QRIS
 25/1/2023, Hazelnut Latte, R, 21, 441000.00, QRIS
 25/1/2023, Cappuccino, R, 3, 54000.00, E-Wallet
+25/1/2023, Hot Tea, R, 3, 45000.00, QRIS
