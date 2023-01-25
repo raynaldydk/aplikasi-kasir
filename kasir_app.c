@@ -71,6 +71,11 @@ int main(){
 			system("cls");
 			print_receipt(sub_input3, index_temp);
 			write_to_file(sub_input3, index_temp);
+			system("pause");
+			system("cls");
+			main();
+			break;
+		case 2:
 			break;
 		case 0:
 			exit(0);
@@ -95,9 +100,9 @@ void load_menu(){
 	int index=0;
     while(!feof(fp)){
     	fscanf(fp, "%[^,], %f, %f\n", 
-				&array_menu[index].nama_menu,
-				&array_menu[index].harga_regular,
-				&array_menu[index].harga_large);
+			&array_menu[index].nama_menu,
+			&array_menu[index].harga_regular,
+			&array_menu[index].harga_large);
 		index++;
 	}
 	fclose(fp);
@@ -122,33 +127,33 @@ int index_counter(char FILE_DIR[]){
 
 void print_menu_txt(){
 	int index = index_counter("menu.txt");
-	printf("----------------------------------------------------------\n");
-	printf("| No |           Nama         |  Regular   |    Large    |\n");
-	printf("----------------------------------------------------------\n");
+	printf("---------------------------------------------------\n");
+	printf("| No |           Nama         | Regular |  Large  |\n");
+	printf("---------------------------------------------------\n");
 	for(int i=0; i<index; i++){
-		printf("| %-2d | %-22s |  %.2f  |   %.2f  |\n",
+		printf("| %-2d | %-22s |  %.0f  |  %.0f  |\n",
 				i+1,
 				array_menu[i].nama_menu,
 				array_menu[i].harga_regular,
 				array_menu[i].harga_large);
 	}
-	printf("----------------------------------------------------------\n");
+	printf("---------------------------------------------------\n");
 }
 
 void scan_order(int index_temp){
-	printf("Pesan: "); scanf("%d", &array_order[index_temp].index_order); getchar();
+	printf("Pesan (No Produk): "); scanf("%d", &array_order[index_temp].index_order); getchar();
 	printf("Ukuran (R/L): "); scanf("%c", &array_order[index_temp].ukuran_order); getchar();
 	printf("Qty: "); scanf("%d", &array_order[index_temp].qty_order); getchar();
 }
 
 void rekap_order(int index_temp){
 	float total=0;
-	printf("----------------------------------------------------------------------\n");
-	printf("| No |          Nama          | Ukuran |  Harga   | Qty  |   Total   |\n");
-	printf("----------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
+	printf("| No |          Nama          | Ukuran | Harga | Qty | Total  |\n");
+	printf("---------------------------------------------------------------\n");
 	for(int i=0; i<index_temp; i++){
 		if(array_order[i].ukuran_order == 'R'){
-			printf("| %-2d | %-22s |    %-3c | %.2f |  %-3d | %-9.2f |\n",
+			printf("| %-2d | %-22s |    %-3c | %.0f |  %-2d | %-6.0f |\n",
 				i+1,
 				array_menu[array_order[i].index_order-1].nama_menu, 
 				array_order[i].ukuran_order,
@@ -158,7 +163,7 @@ void rekap_order(int index_temp){
 				total+=(array_menu[array_order[i].index_order-1].harga_regular * array_order[i].qty_order);
 		}
 		else if(array_order[i].ukuran_order == 'L'){
-			printf("| %-2d | %-22s |    %-3c | %.2f |  %-3d | %-9.2f |\n", 
+			printf("| %-2d | %-22s |    %-3c | %.0f |  %-2d | %-6.0f |\n",
 				i+1,
 				array_menu[array_order[i].index_order-1].nama_menu, 
 				array_order[i].ukuran_order,
@@ -168,8 +173,8 @@ void rekap_order(int index_temp){
 				total+=(array_menu[array_order[i].index_order-1].harga_large * array_order[i].qty_order);
 		}
 	}
-	printf("----------------------------------------------------------------------\n");
-	printf("\t\t\t\t\tTotal Pembayaran = %.2f", total);
+	printf("---------------------------------------------------------------\n");
+	printf("\t\t\t\t    Total Pembayaran = %.0f\n", total);
 }
 
 void ubah_order(){
@@ -181,22 +186,22 @@ void ubah_order(){
 }
 
 void print_receipt(char sub_input3, int index_temp){
-	printf("----------------------------------------------------------------------\n");
-	printf("|\t\t\t\tIP Cafe 2\t\t\t     |\n");
-	printf("----------------------------------------------------------------------\n");
+	printf("---------------------------------------------------------------\n");
+	printf("|\t\t\tIP Cafe 2\t\t\t      |\n");
+	printf("---------------------------------------------------------------\n");
 	time_t t = time(NULL);
 	struct tm tm = *localtime(&t);
 	printf("| %d/%02d/%02d\t\t", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
 	if(sub_input3 == '1'){
-		printf("\t\t\t\t        Cash |\n");
+		printf("\t\t\t\t Cash |\n");
 	}
 	else if(sub_input3 == '2'){
-		printf("\t\t\t\t        QRIS |\n");
+		printf("\t\t\t\t QRIS |\n");
 	}
 	else if(sub_input3 == '3'){
-		printf("\t\t\t\t    E-Wallet |\n");
+		printf("\t\t\t     E-Wallet |\n");
 	}
-	printf("| %02d:%02d:%02d\t\t\t\t\t\t\t     |\n", tm.tm_hour, tm.tm_min, tm.tm_sec);
+	printf("| %02d:%02d:%02d\t\t\t\t\t\t      |\n", tm.tm_hour, tm.tm_min, tm.tm_sec);
 	rekap_order(index_temp);
 }
 
@@ -207,7 +212,7 @@ void write_to_file(char sub_input3, int index_temp){
 	fp = fopen("sales.txt", "a");
 	for(int i=0; i<index_temp; i++){
 		if(toupper(array_order[i].ukuran_order) == 'R' && sub_input3 == '1'){
-			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, Cash\n",
+			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.0f, Cash\n",
 				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
 				array_menu[array_order[i].index_order-1].nama_menu,
 				array_order[i].ukuran_order,
@@ -215,7 +220,7 @@ void write_to_file(char sub_input3, int index_temp){
 				(array_menu[array_order[i].index_order-1].harga_regular * array_order[i].qty_order));
 		}
 		else if(toupper(array_order[i].ukuran_order) == 'R' && sub_input3 =='2'){
-			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, QRIS\n",
+			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.0f, QRIS\n",
 				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
 				array_menu[array_order[i].index_order-1].nama_menu,
 				array_order[i].ukuran_order,
@@ -223,7 +228,7 @@ void write_to_file(char sub_input3, int index_temp){
 				(array_menu[array_order[i].index_order-1].harga_regular * array_order[i].qty_order));
 		}
 		else if(toupper(array_order[i].ukuran_order) == 'R' && sub_input3 =='3'){
-			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, E-Wallet\n",
+			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.0f, E-Wallet\n",
 				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
 				array_menu[array_order[i].index_order-1].nama_menu,
 				array_order[i].ukuran_order,
@@ -231,7 +236,7 @@ void write_to_file(char sub_input3, int index_temp){
 				(array_menu[array_order[i].index_order-1].harga_regular * array_order[i].qty_order));
 		}
 		else if(toupper(array_order[i].ukuran_order) == 'L' && sub_input3 == '1'){
-			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, Cash\n",
+			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.0f, Cash\n",
 				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
 				array_menu[array_order[i].index_order-1].nama_menu,
 				array_order[i].ukuran_order,
@@ -239,7 +244,7 @@ void write_to_file(char sub_input3, int index_temp){
 				(array_menu[array_order[i].index_order-1].harga_large * array_order[i].qty_order));
 		}
 		else if(toupper(array_order[i].ukuran_order) == 'L' && sub_input3 =='2'){
-			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, QRIS\n",
+			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.0f, QRIS\n",
 				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
 				array_menu[array_order[i].index_order-1].nama_menu,
 				array_order[i].ukuran_order,
@@ -247,7 +252,7 @@ void write_to_file(char sub_input3, int index_temp){
 				(array_menu[array_order[i].index_order-1].harga_large * array_order[i].qty_order));
 		}
 		else if(toupper(array_order[i].ukuran_order) == 'L' && sub_input3 =='3'){
-			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.2f, E-Wallet\n",
+			fprintf(fp, "%d/%d/%d, %s, %c, %d, %.0f, E-Wallet\n",
 				tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900,
 				array_menu[array_order[i].index_order-1].nama_menu,
 				array_order[i].ukuran_order,
