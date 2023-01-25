@@ -19,6 +19,7 @@ struct Order{
 	int qty_order;
 } array_order[50];
 
+void input_order();
 void load_menu();
 int index_counter(char FILE_DIR[]);
 void print_menu_txt();
@@ -27,13 +28,10 @@ void rekap_order(int index_temp);
 void ubah_order();
 void print_receipt(char sub_input3, int index_temp);
 void write_to_file(char sub_input3, int index_temp);
+void menu_admin();
 
 int main(){
 	char input;
-	char sub_input;
-	char sub_input2;
-	char sub_input3;
-	int index_temp=0;
 	printf("Aplikasi Kasir\n");
 	printf("--------------\n");
 	printf("1. Input Order\n");
@@ -43,39 +41,10 @@ int main(){
 	printf("Input: "); scanf("%d", &input); getchar();
 	switch(input){
 		case 1:
-			do{
-				system("cls");
-				load_menu();
-				print_menu_txt();
-				scan_order(index_temp);
-				index_temp++;
-				printf("Pesan lagi? (Y/N)\n"); 
-				printf("Input: "); scanf("%c", &sub_input); getchar();
-			}while(toupper(sub_input)!='N');
-			do{
-				system("cls");
-				rekap_order(index_temp);
-				printf("\n");
-				printf("1. Ubah pesanan\n");
-				printf("2. Checkout\n");
-				printf("Input: "); scanf("%c", &sub_input2); getchar();
-				if(sub_input2 == '1'){
-					ubah_order();
-				}
-			}while(sub_input2!='2');
-			printf("Pilih metode pembayaran\n");
-			printf("1. Cash\n");
-			printf("2. QRIS\n");
-			printf("3. E-Wallet\n");
-			printf("Input: "); scanf("%c", &sub_input3); getchar();
-			system("cls");
-			print_receipt(sub_input3, index_temp);
-			write_to_file(sub_input3, index_temp);
-			system("pause");
-			system("cls");
-			main();
+			input_order();
 			break;
 		case 2:
+			menu_admin();
 			break;
 		case 0:
 			exit(0);
@@ -261,4 +230,56 @@ void write_to_file(char sub_input3, int index_temp){
 		}
 	}
 	fclose(fp);
+}
+
+void input_order(){
+	char sub_input;
+	char sub_input2;
+	char sub_input3;
+	int index_temp=0;
+	do{
+		system("cls");
+		load_menu();
+		print_menu_txt();
+		scan_order(index_temp);
+		index_temp++;
+		printf("Pesan lagi? (Y/N)\n"); 
+		printf("Input: "); scanf("%c", &sub_input); getchar();
+	}while(toupper(sub_input)!='N');
+	do{
+		system("cls");
+		rekap_order(index_temp);
+		printf("\n");
+		printf("1. Ubah pesanan\n");
+		printf("2. Checkout\n");
+		printf("Input: "); scanf("%c", &sub_input2); getchar();
+		if(sub_input2 == '1'){
+			ubah_order();
+		}
+	}while(sub_input2!='2');
+	printf("Pilih metode pembayaran\n");
+	printf("1. Cash\n");
+	printf("2. QRIS\n");
+	printf("3. E-Wallet\n");
+	printf("Input: "); scanf("%c", &sub_input3); getchar();
+	system("cls");
+	print_receipt(sub_input3, index_temp);
+	write_to_file(sub_input3, index_temp);
+	system("pause");
+	system("cls");
+	main();
+}
+
+void menu_admin(){
+	char sub_input;
+	system("cls");
+	printf("Menu Admin\n");
+	printf("--------------\n");
+	printf("1. View Sales\n");
+	printf("2. Add Menu\n");
+	printf("3. Edit Menu\n");
+	printf("4. Delete Menu\n");
+	printf("0. Back\n");
+	printf("--------------\n");
+	printf("Input: "); scanf("%c", &sub_input); getchar();
 }

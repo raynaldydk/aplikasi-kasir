@@ -1,2 +1,9 @@
 25/1/2023, Americano, R, 1, 15000, Cash
 25/1/2023, Caffe Latte, R, 2, 42000, Cash
+25/1/2023, Americano, R, 8, 120000, Cash
+25/1/2023, Es Kopi Susu Aren, L, 20, 420000, E-Wallet
+25/1/2023, Teh Macchiato, R, 8, 160000, Cash
+25/1/2023, Caffe Latte, L, 2, 48000, Cash
+25/1/2023, Capuccino, L, 3, 63000, QRIS
+25/1/2023, Es Kopi Susu Aren, L, 1, 21000, Cash
+25/1/2023, Vanilla Latte, L, 1, 24000, E-Wallet
