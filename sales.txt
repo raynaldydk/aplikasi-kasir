@@ -9,3 +9,10 @@
 25/1/2023, Vanilla Latte, L, 1, 24000, E-Wallet
 25/1/2023, Teh Macchiato, L, 20, 460000, E-Wallet
 25/1/2023, Mochaccino Vanilla, R, 2, 54000, E-Wallet
+26/1/2023, Hazelnut Latte, L, 1, 24000, E-Wallet
+26/1/2023, Choco Banana, L, 1, 30000, E-Wallet
+26/1/2023, Ice Shaken Boba Tea, R, 2, 36000, E-Wallet
+26/1/2023, Caffe Latte, r, 2, 42000, E-Wallet
+26/1/2023, Americano, R, 1, 15000, E-Wallet
+26/1/2023, Es Kopi Susu Aren, L, 1, 21000, E-Wallet
+26/1/2023, Caffe Latte, R, 4, 84000, QRIS
